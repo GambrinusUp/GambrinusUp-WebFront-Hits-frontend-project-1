@@ -27,18 +27,43 @@ function LoadMovies(){
             for(let movies of json.movies){
                 let block = template.clone();
                 block.attr("id", "movies-" + movies.id);
-                var img = $('<img />', {src : movies.poster + '.png'});
+                let img = $('<img />', {src : movies.poster + '.png'});
                 img.attr("alt", "Responsive image");
                 img.attr("class", "img-fluid");
-                //img.className = 'img-thumbnail';
                 block.find(".poster").append(img);
-                block.find(".details").text(movies.name);
+                block.find(".name").text(movies.name);
+                block.find(".year").text(movies.year);
+                let genres = GetListOfGenres(movies.genres);
+                block.find(".genres").text(movies.country + " ● " + genres);
+                let rating = GetRatingOfMovies(movies.reviews);
+                block.find(".rating").text("Средняя оценка - " + rating);
                 block.removeClass("d-none");
                 $("#movies-container").append(block);
             }
 
             //RegisterLikeEvents();
         });
+}
+
+function GetListOfGenres(json){
+    let genres = '';
+    for(let i = 0; i < json.length; i++){
+        genres += json[i].name;
+        if(i !== json.length - 1)
+            genres += ", ";
+    }
+    return genres;
+}
+
+function GetRatingOfMovies(json){
+    var numberOfRating = 0;
+    if(json.length !== 0) {
+        for (let i = 0; i < json.length; i++) {
+            numberOfRating += json[i].rating;
+        }
+        numberOfRating = numberOfRating / json.length;
+    }
+    return numberOfRating;
 }
 
 /*function RegisterLikeEvents(){

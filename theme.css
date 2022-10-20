@@ -10,3 +10,32 @@
 .pagination{
     margin-top: 20px;
 }
+
+.name{
+    /*font-family: Arial Black;*/
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.year{
+    margin-top: 10px;
+}
+
+.genres{
+    position: absolute;
+    bottom: 20px;
+}
+
+.rating{
+    margin: 0;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.badge{
+    font-size: 15px;
+    width: 60%;
+}
