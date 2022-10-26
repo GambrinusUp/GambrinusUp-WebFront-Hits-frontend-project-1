@@ -1,10 +1,5 @@
 .card {
-    margin-top: 10px;
-}
-
-#test-template{
-    width: 80%;
-    margin: 10px auto;
+    margin-top: 10px;   /*ИЗМЕНИТЬ РХ НА EM/VH/VM*/
 }
 
 .pagination{
@@ -12,7 +7,6 @@
 }
 
 .name{
-    /*font-family: Arial Black;*/
     font-size: 20px;
     font-weight: bold;
 }
@@ -32,10 +26,47 @@
     top: 50%;
     left: 50%;
     margin-right: -50%;
-    transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%);
 }
 
 .badge{
     font-size: 15px;
     width: 60%;
 }
+
+.img-fluid {  /*дОБАВИТЬ ТЕНЬ*/
+    /*max-width: 65%;
+    height: auto;
+    /*border: 1px solid black;
+    border-radius: 5%;*/
+
+   /*margin: 0;
+    position: relative;
+    /*top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);*/
+
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.about, .reviews {
+    padding-top: 2em;
+}
+
+.form-check {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.movie-tags {
+    padding-left: 1em;
+}
+
+.years, .age {
+    position: absolute;
+    right: 0;
+}
+

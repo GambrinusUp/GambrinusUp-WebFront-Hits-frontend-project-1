@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="/theme.css">
+</head>
+
+<body>
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Movies Catalog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page">Фильмы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Избранное</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Мой профиль</a>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link">Вход</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">Регистрация</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<!--<main class="container">
+    <div class="card" id="movie-template">
+        <div class="card-body test-content"> ТЕЛО ДЕТАЛЕЙ ФИЛЬМА
+            <div class="col row">
+                <div class="col-4 poster">
+                </div>
+                <div class="col-8 details">
+                    <p class="name fs-1 fw-weight-bold"></p>
+                    <p class="movie-details"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>-->
+
+
+<main class="container">
+    <div class="card mb-3" id="movie-template">
+        <div class="card-body test-content">
+            <div class="row g-0">
+                <div class="col-md-3 poster">   <!--изменить md-->
+                </div>
+                <div class="col-md-9 details">
+                    <div class="movie-tags">
+                        <p class="h1 movie-name"></p>
+                        <p class="card-text"></p>
+                        <button type="button" class="btn btn-outline-primary">Добавить в избранное +</button>
+                        <h4 class="about">О фильме</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Год производства <text class="years">asda</text></li>
+                            <li class="list-group-item">Страна</li>
+                            <li class="list-group-item">Жанр</li>
+                            <li class="list-group-item">Время</li>
+                            <li class="list-group-item">Слоган</li>
+                            <li class="list-group-item">Режиссер</li>
+                            <li class="list-group-item">Бюджет</li>
+                            <li class="list-group-item">Сборы в мире</li>
+                            <li class="list-group-item">Возраст <span class="badge age bg-secondary">18+</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="reviews">Отзывы и оценки</h4>
+
+            <div class="card">
+                <div class="card-header">
+                    Добавить отзыв
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Текст отзыва</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <p class="fw-bold">Оценка</p>
+                    <select class="form-select" aria-label="Пример выбора по умолчанию">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Оставить отзыв анонимно
+                        </label>
+                    </div>
+                    <a href="#" class="btn btn-primary">Перейти куда-нибудь</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="movies_page_script.js"></script>
+</body>
+</html>
