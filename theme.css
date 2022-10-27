@@ -53,7 +53,7 @@
 }
 
 .about, .reviews {
-    padding-top: 2em;
+    padding-top: 1em;
 }
 
 .form-check {
@@ -65,8 +65,23 @@
     padding-left: 1em;
 }
 
-.years, .age {
+.years, .country, .genre, .time, .budget, .director, .tagline, .fees {
     position: absolute;
     right: 0;
 }
 
+.score {
+    width: 12%;
+}
+
+.ageLimit {
+    position: absolute;
+    right: 0;
+    width: 5%;
+}
+
+.review-avatar{
+    max-width: 5%;
+    height: auto;
+    margin-right: 1em;
+}
