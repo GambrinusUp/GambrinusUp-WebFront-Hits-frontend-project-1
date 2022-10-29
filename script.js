@@ -19,6 +19,7 @@ function LoadMovies(){
                 let img = $('<img />', {src : movies.poster + '.png'});
                 img.attr("alt", "Responsive image");
                 img.attr("class", "img-fluid");
+                img.addClass("poster");
                 block.find(".poster").append(img);
                 block.find(".name").text(movies.name);
                 block.find(".year").text(movies.year);
