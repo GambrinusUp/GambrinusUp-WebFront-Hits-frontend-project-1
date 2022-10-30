@@ -89,3 +89,7 @@
 .score{
     width: 15em;
 }
+
+#registration-template, #authorization-template, #profile-template{
+    margin-top: 2em;
+}
