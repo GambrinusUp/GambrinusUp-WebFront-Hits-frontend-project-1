@@ -62,7 +62,7 @@ function GetFavorites(token){
                 let genres = GetListOfGenres(movies.genres);
                 block.find(".fav-genres").text(movies.country + " ● " + genres);
                 let rating = GetRatingOfMovies(movies.reviews);
-                block.find(".score").text("Средняя оценка - " + rating);
+                block.find(".fav-score").text("Средняя оценка - " + rating);
                 block.removeClass("d-none");
                 $("#favorite-movies-container").append(block);
             }

@@ -3,7 +3,7 @@ $(document).ready(function (){
 });
 
 function LoadMovies(){
-    fetch("https://react-midterm.kreosoft.space/api/movies/1")
+    fetch("https://react-midterm.kreosoft.space/api/movies/2")
         .then((response) => {
             return response.json();
         })
