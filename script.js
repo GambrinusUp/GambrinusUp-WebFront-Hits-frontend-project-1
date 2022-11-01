@@ -20,7 +20,7 @@ function LoadMovies(){
                 let block = template.clone();
                 console.log(movies.id);
                 block.attr("id", movies.id);
-                let img = $('<img />', {src : movies.poster + '.png'});
+                let img = $('<img />', {src : movies.poster});
                 img.attr("alt", "Responsive image");
                 img.attr("class", "img-fluid");
                 img.addClass("poster");

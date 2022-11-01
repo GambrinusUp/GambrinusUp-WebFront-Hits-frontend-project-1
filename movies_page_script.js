@@ -91,7 +91,7 @@ function DeleteReview(){
 }
 
 function AddReview(){
-    $(".send").click(function (event) {
+    $("#send").click(function (event) {
         if($("#exampleFormControlTextarea1").val() === '')
         {
             console.log("error");
@@ -146,7 +146,7 @@ function LoadMovieDetails(){
         .then((json) => {
             console.log(json);
             movieId = json.id;
-            let img = $('<img />', {src : json.poster + '.png'});
+            let img = $('<img />', {src : json.poster});
             img.attr("alt", "Responsive image");
             img.attr("class", "img-fluid");
             $(".poster").append(img);
@@ -220,11 +220,20 @@ function SetReviews(json){
                     img.attr("alt", "Responsive image");
                     img.attr("class", "rounded-circle review-avatar");
                     block.find(".avatar-nickname").append(img);
-                } else
+                } else{
+                    let img = $('<img />', {src: 'profile_avatar.png'});
+                    img.attr("alt", "Responsive image");
+                    img.attr("class", "rounded-circle review-avatar");
+                    block.find(".avatar-nickname").append(img);
                     console.log("no avatar");
+                }
                 block.find(".avatar-nickname").append(review.author.nickName);
             } else {
                 console.log("anonymous avatar");
+                let img = $('<img />', {src: 'profile_avatar.png'});
+                img.attr("alt", "Responsive image");
+                img.attr("class", "rounded-circle review-avatar");
+                block.find(".avatar-nickname").append(img);
                 block.find(".avatar-nickname").append("Анонимный пользователь");
             }
             block.find(".score").text(review.rating);

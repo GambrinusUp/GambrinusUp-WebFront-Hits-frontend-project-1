@@ -39,7 +39,7 @@ function GetProfile(json) {
     localStorage.setItem('nickName', json.nickName);
     $("#profile-nick").text($("#profile-nick").text() + localStorage.getItem('nickName'));
     profile.find("#inputEmail").val(json.email);
-    if(json.avatarLink === '') {
+    if(json.avatarLink === '' || json.avatarLink === null) {
         let img = $('<img />', {src : 'profile_avatar.png'});
         img.attr("alt", "Responsive image");
         img.attr("class", "img-fluid");
@@ -76,10 +76,10 @@ function Edit(profile){
     }
     else {
         if (validateEmail(email)) {
-            /*fetch("https://react-midterm.kreosoft.space/api/account/profile",
+            fetch("https://react-midterm.kreosoft.space/api/account/profile",
                 {
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
                     },
                     method: "PUT",
@@ -89,8 +89,8 @@ function Edit(profile){
                         "email": email,
                         "avatarLink": link,
                         "name": name,
-                        "birthDate": date,
-                        "gender": gender
+                        "birthDate": date + "T15:49:27.160Z",
+                        "gender": Number(gender)
                     })
                 })
                 .then((response) => {
@@ -103,16 +103,20 @@ function Edit(profile){
                         }, 5 * 1000);
                     }
                     else {
-                        console.log("success");
-                        $(".modal-body").text("Успешно");
-                        myModal.show();
-                        setTimeout(function(){
-                            window.location.href = 'authorization_page.html';
-                        }, 5 * 1000);
+                        if(response.status === 400){
+                            console.log("error");
+                            $(".modal-body").text("Ошибка в введнных данных");
+                            myModal.show();
+                        } else{
+                            console.log("success");
+                            $(".modal-body").text("Успешно");
+                            myModal.show();
+                        }
                     }
-                    return response.json();
-                })
-                .then((json) => {
+                    console.log(response);
+                    //return response.json();
+                });
+                /*.then((json) => {
                     token = json.token;
                     GetFavorites(json.token);
                 });*/

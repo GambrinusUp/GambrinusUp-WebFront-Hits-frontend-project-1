@@ -25,7 +25,7 @@ function Registration(){
                 $(".modal-body").text("Пароли не совпадают");
                 myModal.show();
             } else {
-                /*fetch("https://react-midterm.kreosoft.space/api/account/register",
+                fetch("https://react-midterm.kreosoft.space/api/account/register",
                     {
                         headers: {
                             'Accept': 'application/json',
@@ -37,17 +37,29 @@ function Registration(){
                             "name": name,
                             "password": password,
                             "email": email,
-                            "birthDate": birthDate,
-                            "gender": gender
+                            "birthDate": birthDate + "T11:56:47.615Z",
+                            "gender": Number(gender)
                         })
                     })
                     .then((response) => {
+                        console.log(response.status);  //if response.json().status === '401'  => error
+                        if(response.status === 400){
+                            console.log("error");
+                            $(".modal-body").text("Такой пользователь существует");
+                            myModal.show();
+                            console.log(response);
+                        }
+                        else {
+                            console.log("success");
+                            $(".modal-body").text("Пользователь успешно создан");
+                            myModal.show();
+                        }
                         return response.json();
                     })
                     .then((json) => {
                         token = json.token;
-                        GetFavorites(json.token);
-                    });*/
+                        console.log(token);
+                    });
                 console.log(userName, name, password, passwordCopy, email, birthDate, gender);
             }
         } else {

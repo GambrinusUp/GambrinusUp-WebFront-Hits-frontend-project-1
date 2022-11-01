@@ -1,58 +1,69 @@
 $(document).ready(function (){
-    LoadFavoriteMovies();
+    myModal = new bootstrap.Modal($("#exampleModal"));
+    CheckUser();
+    //LoadFavoriteMovies();
 });
 
-//тестовая функция:
-function LoadFavoriteMovies(){ //catch ошибку авторизации для пользователя
-    let token;
-    fetch("https://react-midterm.kreosoft.space/api/account/login",
+function CheckUser(){
+    fetch("https://react-midterm.kreosoft.space/api/account/profile",
         {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({
-                "username": "string",
-                "password": "string"
-            })
+            headers:
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
         })
         .then((response) => {
-            return response.json();
+            console.log(response.status);
+            if(response.status === 401){
+                console.log("error");
+                $(".modal-body").text("Вы не авторизованы");
+                myModal.show();
+                setTimeout(function(){
+                    window.location.href = 'authorization_page.html';
+                }, 5 * 1000);
+            }
+            else {
+                return response.json();
+            }
         })
         .then((json) => {
-            token = json.token;
-            GetFavorites(json.token);
+            if(json !== undefined){
+                console.log(json);
+                $("#login").addClass("d-none");
+                $("#registration").addClass("d-none");
+                $(".profile-nickname").removeClass("d-none");
+                $("#profile-logout").removeClass("d-none");
+                $("#favorites").removeClass("d-none");
+                $("#my-profile").removeClass("d-none");
+                $("#profile-nick").text($("#profile-nick").text() + json.nickName);
+                GetFavorites();
+            }
         });
 }
 
-function GetFavorites(token){
-    console.log(token);
+function GetFavorites(){
+    console.log();
     fetch("https://react-midterm.kreosoft.space/api/favorites",
         {
             headers:
                 {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
         })
         .then((response) => {
             return response.json();
         })
         .then((json) => {
-            //console.log(json);
-
             $("#favorite-movies-container").empty();
             let template = $('#favorite-movies-template');
-            //console.log(json.movies[0]);
             for(let movies of json.movies){
-
                 console.log(movies);
-
                 let block = template.clone();
                 block.attr("id", movies.id);
-                //let img = $('<img />', {src : movies.poster + '.png'});
-                let img = $('<img />', {src : "test.jpg"});
+                let img = $('<img />', {src : movies.poster});
+                //let img = $('<img />', {src : "test.jpg"});
                 img.attr("alt", "Responsive image");
                 img.attr("class", "img-fluid");
                 img.addClass("poster");
@@ -66,7 +77,40 @@ function GetFavorites(token){
                 block.removeClass("d-none");
                 $("#favorite-movies-container").append(block);
             }
+            RegisterTransition();
+            DeleteFavorite();
         });
+}
+
+function DeleteFavorite(){
+    $(".delete-fav").click(function (event) {
+        console.log(event.target.closest('.card').id);
+        fetch("https://react-midterm.kreosoft.space/api/favorites/" + event.target.closest('.card').id + "/delete",
+            {
+                method: "DELETE",
+                headers:
+                    {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+            })
+            .then((response) => {
+                if(response.status === 401){
+                    console.log("error");
+                    $(".modal-body").text("Вы не авторизованы");
+                    myModal.show();
+                    setTimeout(function(){
+                        window.location.href = 'authorization_page.html';
+                    }, 5 * 1000);
+                }
+                else {
+                    console.log("success");
+                    $(".modal-body").text("Фильм успешно удален из избранных");
+                    myModal.show();
+                    location.reload();
+                }
+            });
+    });
 }
 
 function GetListOfGenres(json){
@@ -87,5 +131,18 @@ function GetRatingOfMovies(json){
         }
         numberOfRating = numberOfRating / json.length;
     }
+    numberOfRating = numberOfRating.toFixed(1);
     return numberOfRating;
 }
+
+function RegisterTransition(){
+    $('.card').click(function(event){
+        localStorage.setItem('currentMovie', event.target.closest('.card').id);
+        console.log(localStorage.getItem('currentMovie'));
+    });
+    $(".name").click(function (event){
+        window.location.href = "movies_page.html";
+    })
+}
+
+var myModal;
