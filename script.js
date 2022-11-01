@@ -1,9 +1,14 @@
 $(document).ready(function (){
+    myModal = new bootstrap.Modal($("#exampleModal"));
+    CheckUser();
     LoadMovies();
 });
 
 function LoadMovies(){
-    fetch("https://react-midterm.kreosoft.space/api/movies/2")
+    if(localStorage.getItem('currentPage') === null)
+        localStorage.setItem('currentPage', '1');
+    console.log(localStorage.getItem('currentPage'));
+    fetch("https://react-midterm.kreosoft.space/api/movies/" + localStorage.getItem('currentPage'))
         .then((response) => {
             return response.json();
         })
@@ -13,7 +18,6 @@ function LoadMovies(){
             let template = $('#movies-template');
             for(let movies of json.movies){
                 let block = template.clone();
-                //block.attr("id", "movies-" + movies.id);
                 console.log(movies.id);
                 block.attr("id", movies.id);
                 let img = $('<img />', {src : movies.poster + '.png'});
@@ -30,12 +34,36 @@ function LoadMovies(){
                 block.removeClass("d-none");
                 $("#movies-container").append(block);
             }
+            SetPageCount(json.pageInfo.pageCount);
+            Navigation(json.pageInfo.pageCount);
+            //console.log(json.pageInfo.pageCount);
             //console.log($(".active")[1].text);        КАК СДЕЛАТЬ НОРМАЛЬНО?
             RegisterTransition();
             /*$(".pagination").click(function (event) {
                console.log(event.target);
             });*/
         });
+}
+
+function Navigation(pageCount) {
+    var page;
+    $(".pagination li").click(function(){
+        //console.log(event.target.text);
+        if(event.target.text === "«" && localStorage.getItem('currentPage') !== '1') {
+            page = Number(localStorage.getItem('currentPage')) - 1;
+            localStorage.setItem('currentPage', page.toString());
+        }else{
+            if(event.target.text === "»" && localStorage.getItem('currentPage') !== pageCount.toString()) {
+                page = Number(localStorage.getItem('currentPage')) + 1;
+                localStorage.setItem('currentPage', page.toString());
+            }
+            else {
+                if(event.target.text !== "»" && event.target.text !== "«") {
+                    localStorage.setItem('currentPage', event.target.text);
+                }
+            }
+        }
+    });
 }
 
 function GetListOfGenres(json){
@@ -56,6 +84,7 @@ function GetRatingOfMovies(json){
         }
         numberOfRating = numberOfRating / json.length;
     }
+    numberOfRating = numberOfRating.toFixed(1);
     return numberOfRating;
 }
 
@@ -64,4 +93,77 @@ function RegisterTransition(){
         localStorage.setItem('currentMovie', event.target.closest('.card').id);
         console.log(localStorage.getItem('currentMovie'));
     });
+    $(".name").click(function (event){
+        window.location.href = "movies_page.html";
+    })
 }
+
+function CheckUser(){
+    fetch("https://react-midterm.kreosoft.space/api/account/profile",
+        {
+            headers:
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+        })
+        .then((response) => {
+            console.log(response.status);
+            if(response.status === 401){
+                console.log("error");
+                $(".modal-body").text("Вы не авторизованы");
+                myModal.show();
+            }
+            else {
+                return response.json();
+            }
+        })
+        .then((json) => {
+            if(json !== undefined){
+                console.log(json);
+                $("#login").addClass("d-none");
+                $("#registration").addClass("d-none");
+                $(".profile-nickname").removeClass("d-none");
+                $("#profile-logout").removeClass("d-none");
+                $("#favorites").removeClass("d-none");
+                $("#my-profile").removeClass("d-none");
+                $("#profile-nick").text($("#profile-nick").text() + json.nickName);
+            }
+        });
+}
+
+function SetPageCount(count) {
+    let pageBlock = $(".pagination");
+    for (let i = 0; i < count; i++) {
+        if((i+1).toString() === localStorage.getItem('currentPage'))
+        {
+            $("<li/>", {
+                class: "page-item",
+            }).append( $("<a/>", {
+                class: "page-link active",
+                text: i+1,
+                href: "main.html"
+            })).appendTo(pageBlock);
+        } else {
+            $("<li/>", {
+                class: "page-item",
+            }).append( $("<a/>", {
+                class: "page-link",
+                text: i+1,
+                href: "main.html"
+            })).appendTo(pageBlock);
+        }
+    }
+    $("<li/>", {
+        class: "page-item",
+    }).append( $("<a/>", {
+        class: "page-link",
+        text: "»",
+        ariaLabel: "Next",
+        href: "main.html"
+    })).append( $("<span/>", {
+        ariaHidden: "true"
+    })).appendTo(pageBlock);
+}
+
+var myModal;

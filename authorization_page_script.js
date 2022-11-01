@@ -4,6 +4,7 @@ $(document).ready(function (){
 });
 
 function Authorization(){
+    //window.history.pushState(null, null, 'http://localhost/login');
     let username, password;
     username = $("#inputLogin").val();
     password = $("#inputPassword1").val();
@@ -26,13 +27,29 @@ function Authorization(){
                         })
                     })
                     .then((response) => {
-                        //console.log(response);
-                        return response.json();
+                        if(response.status === 400){
+                            console.log('Login failed');
+                            $(".modal-body").text("Неправильный логин или пароль");
+                            myModal.show();
+                        }
+                        else{
+                            return response.json();
+                        }
                     })
                     .then((json) => {
-                        token = json.token;
-                        localStorage.setItem('token', token);
-                        console.log(localStorage.getItem('token'));
+                        if(json !== undefined) {
+                            //console.log(json);
+                            token = json.token;
+                            localStorage.setItem('token', token);
+                            console.log(localStorage.getItem('token'));
+                            $(".modal-body").text("Вы успешно вошли");
+                            myModal.show();
+                            setTimeout(function(){
+                                window.location.href = 'main.html';
+                            }, 2 * 1000);
+                        } else {
+                            localStorage.setItem('token', '');
+                        }
                     });
     }
 }
