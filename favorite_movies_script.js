@@ -79,6 +79,7 @@ function GetFavorites(){
             }
             RegisterTransition();
             DeleteFavorite();
+            $("#profile-logout").click(function (){ LogOut() });
         });
 }
 
@@ -101,7 +102,7 @@ function DeleteFavorite(){
                     myModal.show();
                     setTimeout(function(){
                         window.location.href = 'authorization_page.html';
-                    }, 5 * 1000);
+                    }, 2 * 1000);
                 }
                 else {
                     console.log("success");
@@ -143,6 +144,41 @@ function RegisterTransition(){
     $(".name").click(function (event){
         window.location.href = "movies_page.html";
     })
+}
+
+function LogOut() {
+    fetch("https://react-midterm.kreosoft.space/api/account/logout",
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            method: "POST"
+        })
+        .then((response) => {
+            console.log(response.status);  //if response.json().status === '401'  => error
+            if(response.status === 400 || response.status === 401){
+                console.log("error");
+                $(".modal-body").text("Ошибка");
+                myModal.show();
+                console.log(response);
+            }
+            else {
+                return response.json();
+            }
+        })
+        .then((json) => {
+            if(json !== undefined) {
+                token = json.token;
+                localStorage.setItem('token', '');
+                $(".modal-body").text("Вы успешно вышли из профиля");
+                myModal.show();
+                setTimeout(function(){
+                    window.location.href = 'main.html';
+                }, 1 * 1000);
+            }
+        });
 }
 
 var myModal;

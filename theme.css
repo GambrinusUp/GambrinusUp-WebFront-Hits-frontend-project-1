@@ -1,13 +1,13 @@
 .card {
-    margin-top: 10px;   /*ИЗМЕНИТЬ РХ НА EM/VH/VM*/
+    margin-top: 0.625em;/*10px;   /*ИЗМЕНИТЬ РХ НА EM/VH/VM*/
 }
 
 .pagination{
-    margin-top: 20px;
+    margin-top: 1.25em;/*20px;*/
 }
 
 .name{
-    font-size: 20px;
+    font-size: 1.25em;
     font-weight: bold;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .score {
-    width: 12%;
+    width: 2.5em;
 }
 
 .ageLimit {

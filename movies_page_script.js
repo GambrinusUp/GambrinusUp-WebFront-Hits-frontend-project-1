@@ -1,4 +1,4 @@
-$(document).ready(function (){
+$(document).ready(function (){          //УДАЛИТЬ ВЫВОД СООБЩЕНИЯ ПРИ НЕАВТОРИЗАЦИИ
     myModal = new bootstrap.Modal($("#exampleModal"));
     CheckUser();
     /*LoadMovieDetails();
@@ -120,7 +120,7 @@ function AddReview(){
                         "isAnonymous": isAnonymous
                     })
                 })
-                .then((response) => {
+                .then((response) => {       /*ДОБАВИТЬ ВРЕМЯ ДЛЯ ОБНОВЛЕНИЯ*/
                     if(response.status === 401){
                         console.log("error");
                         $(".modal-body").text("Вы не авторизованы");
@@ -130,7 +130,10 @@ function AddReview(){
                         console.log("success");
                         $(".modal-body").text("Отзыв успешно добавлен");
                         myModal.show();
-                        location.reload();
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1 * 1000);
+                        //location.reload();
                     }
                     return response.json();
                 });
@@ -168,6 +171,7 @@ function LoadMovieDetails(){
             AddReview();
             EditReview();
             DeleteReview();
+            $("#profile-logout").click(function (){ LogOut() });
         });
 }
 
@@ -215,7 +219,7 @@ function SetReviews(json){
             let block = template.clone();
             block.attr("id", review.id);
             if (!review.isAnonymous) {
-                if (review.author.avatar !== "") {
+                if (review.author.avatar !== "" && review.author.avatar !== null) {
                     let img = $('<img />', {src: review.author.avatar});
                     img.attr("alt", "Responsive image");
                     img.attr("class", "rounded-circle review-avatar");
@@ -237,7 +241,7 @@ function SetReviews(json){
                 block.find(".avatar-nickname").append("Анонимный пользователь");
             }
             block.find(".score").text(review.rating);
-            block.find(".date").text("Дата отзыва:" + review.createDateTime); //распарсить дату
+            block.find(".date").text("Дата отзыва:" + parsingJsonDate(review.createDateTime)); //распарсить дату
             block.find(".reviewText").text(review.reviewText);
             if (review.rating > 5) {
                 block.addClass("border-success");
@@ -284,9 +288,9 @@ function CheckUser(){
         .then((response) => {
             console.log(response.status);
             if(response.status === 401){
-                console.log("error");
-                $(".modal-body").text("Вы не авторизованы");
-                myModal.show();
+                console.log("unauthorized");
+                //$(".modal-body").text("Вы не авторизованы");
+                //myModal.show();
             }
             else {
                 return response.json();
@@ -336,6 +340,45 @@ function CheckForFavoriteMovie(){
                 }
             }
         });
+}
+
+function LogOut() {
+    fetch("https://react-midterm.kreosoft.space/api/account/logout",
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            method: "POST"
+        })
+        .then((response) => {
+            console.log(response.status);  //if response.json().status === '401'  => error
+            if(response.status === 400 || response.status === 401){
+                console.log("error");
+                $(".modal-body").text("Ошибка");
+                myModal.show();
+                console.log(response);
+            }
+            else {
+                return response.json();
+            }
+        })
+        .then((json) => {
+            if(json !== undefined) {
+                token = json.token;
+                localStorage.setItem('token', '');
+                $(".modal-body").text("Вы успешно вышли из профиля");
+                myModal.show();
+                setTimeout(function(){
+                    window.location.href = 'movies_page.html';
+                }, 1 * 1000);
+            }
+        });
+}
+
+function parsingJsonDate(date){
+    return date.match(/\d{4}-\d{2}-\d{2}/);
 }
 
 var myModal;

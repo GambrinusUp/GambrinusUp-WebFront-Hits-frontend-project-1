@@ -36,19 +36,14 @@ function LoadMovies(){
             }
             SetPageCount(json.pageInfo.pageCount);
             Navigation(json.pageInfo.pageCount);
-            //console.log(json.pageInfo.pageCount);
-            //console.log($(".active")[1].text);        КАК СДЕЛАТЬ НОРМАЛЬНО?
             RegisterTransition();
-            /*$(".pagination").click(function (event) {
-               console.log(event.target);
-            });*/
+            $("#profile-logout").click(function (){ LogOut() });
         });
 }
 
 function Navigation(pageCount) {
     var page;
     $(".pagination li").click(function(){
-        //console.log(event.target.text);
         if(event.target.text === "«" && localStorage.getItem('currentPage') !== '1') {
             page = Number(localStorage.getItem('currentPage')) - 1;
             localStorage.setItem('currentPage', page.toString());
@@ -110,9 +105,9 @@ function CheckUser(){
         .then((response) => {
             console.log(response.status);
             if(response.status === 401){
-                console.log("error");
-                $(".modal-body").text("Вы не авторизованы");
-                myModal.show();
+                console.log("unauthorized");
+                //$(".modal-body").text("Вы не авторизованы");
+                //myModal.show();
             }
             else {
                 return response.json();
@@ -164,6 +159,41 @@ function SetPageCount(count) {
     })).append( $("<span/>", {
         ariaHidden: "true"
     })).appendTo(pageBlock);
+}
+
+function LogOut() {
+    fetch("https://react-midterm.kreosoft.space/api/account/logout",
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            method: "POST"
+        })
+        .then((response) => {
+            console.log(response.status);  //if response.json().status === '401'  => error
+            if(response.status === 400 || response.status === 401){
+                console.log("error");
+                $(".modal-body").text("Ошибка");
+                myModal.show();
+                console.log(response);
+            }
+            else {
+                return response.json();
+            }
+        })
+        .then((json) => {
+            if(json !== undefined) {
+                token = json.token;
+                localStorage.setItem('token', '');
+                $(".modal-body").text("Вы успешно вышли из профиля");
+                myModal.show();
+                setTimeout(function(){
+                    location.reload();
+                }, 1 * 1000);
+            }
+        });
 }
 
 var myModal;
