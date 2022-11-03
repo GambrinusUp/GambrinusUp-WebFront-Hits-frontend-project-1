@@ -30,11 +30,11 @@
 }
 
 .badge{
-    font-size: 15px;
-    width: 60%;
+    font-size: 0.9vw;
+    width: 70%;
 }
 
-.img-fluid {  /*дОБАВИТЬ ТЕНЬ*/
+.img-fluid {
     /*max-width: 65%;
     height: auto;
     /*border: 1px solid black;
@@ -68,6 +68,7 @@
 .years, .country, .genre, .time, .budget, .director, .tagline, .fees {
     position: absolute;
     right: 0;
+    font-size: 0.9vw;
 }
 
 .score {
