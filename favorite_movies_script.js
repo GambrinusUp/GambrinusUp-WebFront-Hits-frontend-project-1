@@ -21,7 +21,7 @@ function CheckUser(){
                 myModal.show();
                 setTimeout(function(){
                     window.location.href = 'authorization_page.html';
-                }, 5 * 1000);
+                }, 2 * 1000);
             }
             else {
                 return response.json();

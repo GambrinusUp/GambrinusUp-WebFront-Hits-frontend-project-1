@@ -1,4 +1,4 @@
-$(document).ready(function (){          //УДАЛИТЬ ВЫВОД СООБЩЕНИЯ ПРИ НЕАВТОРИЗАЦИИ
+$(document).ready(function (){
     myModal = new bootstrap.Modal($("#exampleModal"));
     CheckUser();
     /*LoadMovieDetails();
@@ -8,14 +8,19 @@ $(document).ready(function (){          //УДАЛИТЬ ВЫВОД СООБЩЕ
 
 function EditReview(){
     let block = $("#" + userReviewId);
+    let editBlock = $("#edit-template").clone();
+    let userText;
     $(".edit").click(function (event) {
         console.log("Event");
         console.log(block.find(".reviewText").text());
+        userText = block.find(".reviewText").text();
         block.find(".reviewText").empty();
-        block.find(".reviewText").append($("#edit-template"));
+        block.find(".reviewText").append(editBlock);
         block.find("#edit-template").removeClass("d-none");
         block.find(".edit").addClass("d-none");
+        block.find(".score-date").addClass("d-none");
         block.find(".save").removeClass("d-none");
+        block.find(".cancel").removeClass("d-none");
         console.log(Number(userRating));
         block.find("#rating2").val(Number(userRating));
         block.find("#exampleFormControlTextarea2").val(userText);
@@ -59,6 +64,14 @@ function EditReview(){
                 }
                 return response.json();
             });
+    });
+    $(".cancel").click(function (event){
+        block.find(".reviewText").empty();
+        block.find(".reviewText").text(userText);
+        block.find(".score-date").removeClass("d-none");
+        block.find(".save").addClass("d-none");
+        block.find(".cancel").addClass("d-none");
+        block.find(".edit").removeClass("d-none");
     });
 }
 
@@ -159,8 +172,16 @@ function LoadMovieDetails(){
             $(".time").text(json.time + " мин");
             $(".tagline").text("«" + json.tagline + "»");
             $(".director").text(json.director);
-            $(".budget").text("$" + json.budget); //https://www.cyberforum.ru/javascript-beginners/thread2930952.html
-            $(".fees").text("$" + json.fees);
+            $(".budget").text("$" + json.budget.toString()
+                .replace(
+                    /(\d{3})+$/,
+                    (g, g1, i) => (i ? " " : "") + g.match(/.{3}/g).join(" ")
+                )); //https://www.cyberforum.ru/javascript-beginners/thread2930952.html
+            $(".fees").text("$" + json.fees.toString()
+                .replace(
+                    /(\d{3})+$/,
+                    (g, g1, i) => (i ? " " : "") + g.match(/.{3}/g).join(" ")
+                ));
             $(".ageLimit").text(json.ageLimit + "+");
             $(".country").text(json.country);
             let genres = GetListOfGenres(json.genres);
@@ -241,7 +262,7 @@ function SetReviews(json){
                 block.find(".avatar-nickname").append("Анонимный пользователь");
             }
             block.find(".score").text(review.rating);
-            block.find(".date").text("Дата отзыва:" + parsingJsonDate(review.createDateTime)); //распарсить дату
+            block.find(".date").text("Дата отзыва: " + parsingJsonDate(review.createDateTime)); //распарсить дату
             block.find(".reviewText").text(review.reviewText);
             if (review.rating > 5) {
                 block.addClass("border-success");
