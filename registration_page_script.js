@@ -53,6 +53,9 @@ function Registration(){
                             console.log("success");
                             $(".modal-body").text("Пользователь успешно создан");
                             myModal.show();
+                            setTimeout(function(){
+                                window.location.href = '/authorization_page.html';
+                            }, 2 * 1000);
                         }
                         return response.json();
                     })

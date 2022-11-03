@@ -21,7 +21,7 @@ function LoadProfile(){
                 $(".modal-body").text("Вы не авторизованы");
                 myModal.show();
                 setTimeout(function(){
-                    window.location.href = 'authorization_page.html';
+                    window.location.href = '/authorization_page.html';
                 }, 5 * 1000);
             }
             return response.json();
@@ -100,7 +100,7 @@ function Edit(profile){
                         $(".modal-body").text("Вы не авторизованы");
                         myModal.show();
                         setTimeout(function(){
-                            window.location.href = 'authorization_page.html';
+                            window.location.href = '/authorization_page.html';
                         }, 5 * 1000);
                     }
                     else {
@@ -154,7 +154,7 @@ function LogOut() {
                 $(".modal-body").text("Вы успешно вышли из профиля");
                 myModal.show();
                 setTimeout(function(){
-                    window.location.href = 'main.html';
+                    window.location.href = '/main.html';
                 }, 1 * 1000);
             }
         });

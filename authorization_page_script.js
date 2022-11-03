@@ -45,7 +45,7 @@ function Authorization(){
                             $(".modal-body").text("Вы успешно вошли");
                             myModal.show();
                             setTimeout(function(){
-                                window.location.href = 'main.html';
+                                window.location.href = '/main.html';
                             }, 2 * 1000);
                         } else {
                             localStorage.setItem('token', '');

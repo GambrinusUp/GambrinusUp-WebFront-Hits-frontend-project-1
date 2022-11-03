@@ -1,4 +1,6 @@
 $(document).ready(function (){
+    console.log(window.location.href);
+
     myModal = new bootstrap.Modal($("#exampleModal"));
     CheckUser();
     LoadMovies();
@@ -137,7 +139,7 @@ function SetPageCount(count) {
             }).append( $("<a/>", {
                 class: "page-link active",
                 text: i+1,
-                href: "main.html"
+                href: "/main.html"
             })).appendTo(pageBlock);
         } else {
             $("<li/>", {
@@ -145,7 +147,7 @@ function SetPageCount(count) {
             }).append( $("<a/>", {
                 class: "page-link",
                 text: i+1,
-                href: "main.html"
+                href: "/main.html"
             })).appendTo(pageBlock);
         }
     }
@@ -155,7 +157,7 @@ function SetPageCount(count) {
         class: "page-link",
         text: "»",
         ariaLabel: "Next",
-        href: "main.html"
+        href: "/main.html"
     })).append( $("<span/>", {
         ariaHidden: "true"
     })).appendTo(pageBlock);

@@ -1,4 +1,5 @@
 $(document).ready(function (){
+    console.log(window.location.href);
     myModal = new bootstrap.Modal($("#exampleModal"));
     CheckUser();
     /*LoadMovieDetails();

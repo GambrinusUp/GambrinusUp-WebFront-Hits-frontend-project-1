@@ -20,7 +20,7 @@ function CheckUser(){
                 $(".modal-body").text("Вы не авторизованы");
                 myModal.show();
                 setTimeout(function(){
-                    window.location.href = 'authorization_page.html';
+                    window.location.href = '/authorization_page.html';
                 }, 2 * 1000);
             }
             else {
@@ -101,7 +101,7 @@ function DeleteFavorite(){
                     $(".modal-body").text("Вы не авторизованы");
                     myModal.show();
                     setTimeout(function(){
-                        window.location.href = 'authorization_page.html';
+                        window.location.href = '/authorization_page.html';
                     }, 2 * 1000);
                 }
                 else {
@@ -142,7 +142,7 @@ function RegisterTransition(){
         console.log(localStorage.getItem('currentMovie'));
     });
     $(".name").click(function (event){
-        window.location.href = "movies_page.html";
+        window.location.href = "/movies_page.html";
     })
 }
 
@@ -175,7 +175,7 @@ function LogOut() {
                 $(".modal-body").text("Вы успешно вышли из профиля");
                 myModal.show();
                 setTimeout(function(){
-                    window.location.href = 'main.html';
+                    window.location.href = '/main.html';
                 }, 1 * 1000);
             }
         });
