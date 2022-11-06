@@ -1,4 +1,5 @@
 $(document).ready(function (){
+    history.pushState(null, null, '/registration/');
     myModal = new bootstrap.Modal($("#exampleModal"));
     $("#registration-button").click(function(){ Registration() });
 });

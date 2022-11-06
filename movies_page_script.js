@@ -1,4 +1,5 @@
 $(document).ready(function (){
+    history.pushState(null, null, '/movie/' + localStorage.getItem('currentMovie'));
     console.log(window.location.href);
     myModal = new bootstrap.Modal($("#exampleModal"));
     CheckUser();
@@ -247,7 +248,7 @@ function SetReviews(json){
                     img.attr("class", "rounded-circle review-avatar");
                     block.find(".avatar-nickname").append(img);
                 } else{
-                    let img = $('<img />', {src: 'profile_avatar.png'});
+                    let img = $('<img />', {src: '/profile_avatar.png'});
                     img.attr("alt", "Responsive image");
                     img.attr("class", "rounded-circle review-avatar");
                     block.find(".avatar-nickname").append(img);
@@ -256,7 +257,7 @@ function SetReviews(json){
                 block.find(".avatar-nickname").append(review.author.nickName);
             } else {
                 console.log("anonymous avatar");
-                let img = $('<img />', {src: 'profile_avatar.png'});
+                let img = $('<img />', {src: '/profile_avatar.png'});
                 img.attr("alt", "Responsive image");
                 img.attr("class", "rounded-circle review-avatar");
                 block.find(".avatar-nickname").append(img);

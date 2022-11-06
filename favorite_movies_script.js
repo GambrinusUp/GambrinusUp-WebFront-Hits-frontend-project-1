@@ -1,4 +1,5 @@
 $(document).ready(function (){
+    history.pushState(null, null, '/favorites/');
     myModal = new bootstrap.Modal($("#exampleModal"));
     CheckUser();
     //LoadFavoriteMovies();

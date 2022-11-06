@@ -1,4 +1,5 @@
 $(document).ready(function (){
+    history.pushState(null, null, "/" + localStorage.getItem('currentPage'));
     console.log(window.location.href);
 
     myModal = new bootstrap.Modal($("#exampleModal"));

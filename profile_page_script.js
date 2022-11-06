@@ -1,4 +1,5 @@
 $(document).ready(function (){
+    history.pushState(null, null, '/profile/');
     myModal = new bootstrap.Modal($("#exampleModal"));
     LoadProfile();
     //$("#edit-button").click(function(){ Edit() });

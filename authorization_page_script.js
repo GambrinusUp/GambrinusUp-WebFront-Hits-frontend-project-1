@@ -1,4 +1,5 @@
 $(document).ready(function (){
+    history.pushState(null, null, '/login/');
     myModal = new bootstrap.Modal($("#exampleModal"));
     $("#authorization-button").click(function(){ Authorization() });
 });
